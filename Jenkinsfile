@@ -1,16 +1,34 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'JDK25'
-    }
-
     options {
         timestamps()
         disableConcurrentBuilds()
     }
 
     stages {
+        stage('Set up Java 25') {
+            steps {
+                sh '''
+                    set -eu
+                    jdk_home="$WORKSPACE/.jdk/jdk-25.0.5+8"
+                    archive="$WORKSPACE/.jdk/OpenJDK25U-jdk_x64_linux_hotspot_25.0.5_8.tar.gz"
+                    if [ ! -x "$jdk_home/bin/java" ]; then
+                        mkdir -p "$WORKSPACE/.jdk"
+                        curl -fsSL "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_x64_linux_hotspot_25.0.5_8.tar.gz" -o "$archive"
+                        echo "68982529869257d0ee6b824ec5aa270ff8b118bb438670da0b97ebdab178d7fb  $archive" | sha256sum --check -
+                        tar -xzf "$archive" -C "$WORKSPACE/.jdk"
+                        rm "$archive"
+                    fi
+                    "$jdk_home/bin/java" -version
+                '''
+                script {
+                    env.JAVA_HOME = "${env.WORKSPACE}/.jdk/jdk-25.0.5+8"
+                    env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+                }
+            }
+        }
+
         stage('Verify Java runtime') {
             steps {
                 sh '''

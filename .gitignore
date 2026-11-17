@@ -3,6 +3,7 @@
 **/build/
 .gradle/
 .gradle-dist/
+.jdk/
 demo/.build/
 
 # Node
