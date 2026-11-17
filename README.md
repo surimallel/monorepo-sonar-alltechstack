@@ -15,8 +15,8 @@ their sources and coverage reports together as one SonarQube project.
 
 ## Run locally
 
-Install JDK 17 or later, Maven, Node.js 20+, npm, and Python 3.10+. The
-local script and Jenkins pipeline download and checksum-verify Gradle 8.10.2.
+Install JDK 25 or later, Maven, Node.js 20+, npm, and Python 3.10+. The
+local script and Jenkins pipeline download and checksum-verify Gradle 9.9.1.
 
 From PowerShell at the repository root, build and test every stack, then start
 the browser demo automatically:
@@ -52,9 +52,9 @@ integration/presentation code rather than the independently tested features.
 
 ## Jenkins and SonarQube setup
 
-Run the pipeline on a Linux Jenkins agent with JDK 17 or later, Maven, `curl`,
+Run the pipeline on a Linux Jenkins agent with JDK 25 or later, Maven, `curl`,
 `unzip`, `sha256sum`, Node.js 20+, npm, Python 3, and pip available on `PATH`.
-The pipeline downloads and verifies Gradle 8.10.2, so no Jenkins Gradle tool
+The pipeline downloads and verifies Gradle 9.9.1, so no Jenkins Gradle tool
 installation is required. Configure the Jenkins SonarQube Scanner plugin with
 a server installation named `SonarQube`, a
 scanner tool named `SonarScanner`, and the SonarQube webhook to Jenkins at

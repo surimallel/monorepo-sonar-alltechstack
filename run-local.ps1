@@ -1,11 +1,11 @@
 $ErrorActionPreference = 'Stop'
 
 $root = $PSScriptRoot
-$gradleVersion = '8.10.2'
+$gradleVersion = '9.9.1'
 $gradleRoot = Join-Path $root '.gradle-dist'
 $gradleHome = Join-Path $gradleRoot "gradle-$gradleVersion"
 $gradleZip = Join-Path $gradleRoot "gradle-$gradleVersion-bin.zip"
-$gradleSha256 = '31c55713e40233a8303827ceb42ca48a47267a0ad4bab9177123121e71524c26'
+$gradleSha256 = 'd8a18a7a841dd5df825d35a685fad6f2d7f12ac0c280e57b67c27b4a520ba228'
 
 function Get-ToolPath {
     param([string]$Name)
