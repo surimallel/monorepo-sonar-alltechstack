@@ -16,18 +16,22 @@ their sources and coverage reports together as one SonarQube project.
 ## Run locally
 
 Install JDK 17 or later, Maven, Node.js 20+, npm, and Python 3.10+. The
-Jenkins pipeline downloads and checksum-verifies Gradle 8.10.2.
+local script and Jenkins pipeline download and checksum-verify Gradle 8.10.2.
 
-Start the browser demo from the repository root:
+From PowerShell at the repository root, build and test every stack, then start
+the browser demo automatically:
 
 ```sh
-cd demo
-npm start
+.\run-local.ps1
 ```
 
-Open [http://127.0.0.1:3000](http://127.0.0.1:3000). The demo compiles the Java
-feature classes when it starts and calls the Java, Node.js, and Python feature
-implementations. It listens only on localhost.
+The script opens [http://127.0.0.1:3000](http://127.0.0.1:3000) after all
+builds and tests pass. It listens only on localhost; leave the server process
+running to use the page. The script prints a command to stop it.
+
+To start only the browser demo without running the full build, use `npm start`
+from the `demo/` directory. The demo compiles the Java feature classes when it
+starts and calls the Java, Node.js, and Python feature implementations.
 
 ```sh
 mvn -B -f java-maven/pom.xml clean verify
