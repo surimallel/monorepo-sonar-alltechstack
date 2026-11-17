@@ -1,0 +1,12 @@
+{
+  "name": "url-slug-generator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "cd .. && c8 --check-coverage --lines 80 --reporter=lcov --reporter=text --reports-dir node/coverage node --test node/test/slugify.test.js"
+  },
+  "devDependencies": {
+    "c8": "^10.1.3"
+  }
+}
