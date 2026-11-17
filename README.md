@@ -52,11 +52,13 @@ integration/presentation code rather than the independently tested features.
 
 ## Jenkins and SonarQube setup
 
-Run the pipeline on a Linux Jenkins agent with JDK 25 or later, Maven, `curl`,
-`unzip`, `sha256sum`, Node.js 20+, npm, Python 3, and pip available on `PATH`.
-The pipeline downloads and verifies Gradle 9.9.1, so no Jenkins Gradle tool
-installation is required. Configure the Jenkins SonarQube Scanner plugin with
-a server installation named `SonarQube`, a
+Run the pipeline on a Linux Jenkins agent with Maven, `curl`, `unzip`,
+`sha256sum`, Node.js 20+, npm, Python 3, and pip available on `PATH`. Configure
+a Jenkins JDK tool installation named `JDK25` with JDK 25 or later; the
+pipeline selects it and verifies its version before building. The pipeline
+downloads and verifies Gradle 9.9.1, so no Jenkins Gradle tool installation is
+required. Configure the Jenkins SonarQube Scanner plugin with a server
+installation named `SonarQube`, a
 scanner tool named `SonarScanner`, and the SonarQube webhook to Jenkins at
 `<jenkins-url>/sonarqube-webhook/`.
 

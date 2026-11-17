@@ -1,12 +1,37 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'JDK25'
+    }
+
     options {
         timestamps()
         disableConcurrentBuilds()
     }
 
     stages {
+        stage('Verify Java runtime') {
+            steps {
+                sh '''
+                    set -eu
+                    java_spec=$(java -XshowSettings:properties -version 2>&1 | sed -n 's/^[[:space:]]*java.specification.version = //p' | head -n 1)
+                    case "$java_spec" in
+                        ''|*[!0-9]*)
+                            echo "Unable to determine the Java specification version: ${java_spec:-unknown}" >&2
+                            exit 1
+                            ;;
+                    esac
+                    if [ "$java_spec" -lt 25 ]; then
+                        echo "JDK 25 or later is required; found Java $java_spec." >&2
+                        exit 1
+                    fi
+                    java -version
+                    mvn -version
+                '''
+            }
+        }
+
         stage('Java Maven - greeting formatter') {
             steps {
                 sh 'mvn -B -f java-maven/pom.xml clean verify'
