@@ -42,7 +42,9 @@ python -m coverage report --fail-under=80
 ```
 
 The Node and Python test commands enforce an 80% line-coverage minimum. Maven
-and Gradle enforce the same minimum through JaCoCo.
+and Gradle enforce the same minimum through JaCoCo. The browser demo's server
+and page scripts are analyzed but excluded from coverage because they are
+integration/presentation code rather than the independently tested features.
 
 ## Jenkins and SonarQube setup
 
