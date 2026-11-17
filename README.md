@@ -54,11 +54,11 @@ integration/presentation code rather than the independently tested features.
 
 Run the pipeline on a Linux Jenkins agent with Maven, `curl`, `tar`, `unzip`,
 `sha256sum`, Node.js 20+, npm, Python 3, and pip available on `PATH`. The
-pipeline downloads and checksum-verifies Temurin JDK 25 and Gradle 9.9.1, so no
-Jenkins JDK or Gradle tool installation is required. Configure the Jenkins
-SonarQube Scanner plugin with a server
-installation named `SonarQube`, a
-scanner tool named `SonarScanner`, and the SonarQube webhook to Jenkins at
+pipeline detects x86_64 or ARM64, downloads and checksum-verifies the matching
+Temurin JDK 25 build, and downloads and verifies Gradle 9.9.1. No Jenkins JDK
+or Gradle tool installation is required. Configure the Jenkins SonarQube
+Scanner plugin with a server installation named `SonarQube`, a scanner tool
+named `SonarScanner`, and the SonarQube webhook to Jenkins at
 `<jenkins-url>/sonarqube-webhook/`.
 
 The pipeline uses `sonar-project.properties`'s project key (`monorepo-alltechstack`)

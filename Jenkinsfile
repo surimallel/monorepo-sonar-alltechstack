@@ -11,19 +11,40 @@ pipeline {
             steps {
                 sh '''
                     set -eu
-                    jdk_home="$WORKSPACE/.jdk/jdk-25.0.5+8"
-                    archive="$WORKSPACE/.jdk/OpenJDK25U-jdk_x64_linux_hotspot_25.0.5_8.tar.gz"
+                    jdk_root="$WORKSPACE/.jdk"
+                    case "$(uname -m)" in
+                        x86_64|amd64)
+                            jdk_arch=x64
+                            jdk_sha256=68982529869257d0ee6b824ec5aa270ff8b118bb438670da0b97ebdab178d7fb
+                            ;;
+                        aarch64|arm64)
+                            jdk_arch=aarch64
+                            jdk_sha256=bb5b2ded252f21c6090cf780b0a408ad0d83bbb557e702955643557f13231880
+                            ;;
+                        *)
+                            echo "Unsupported Jenkins agent architecture: $(uname -m)" >&2
+                            exit 1
+                            ;;
+                    esac
+                    jdk_home="$jdk_root/jdk-25.0.5+8-$jdk_arch"
+                    archive_name="OpenJDK25U-jdk_${jdk_arch}_linux_hotspot_25.0.5_8.tar.gz"
+                    archive="$jdk_root/$archive_name"
                     if [ ! -x "$jdk_home/bin/java" ]; then
-                        mkdir -p "$WORKSPACE/.jdk"
-                        curl -fsSL "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_x64_linux_hotspot_25.0.5_8.tar.gz" -o "$archive"
-                        echo "68982529869257d0ee6b824ec5aa270ff8b118bb438670da0b97ebdab178d7fb  $archive" | sha256sum --check -
-                        tar -xzf "$archive" -C "$WORKSPACE/.jdk"
+                        mkdir -p "$jdk_root"
+                        curl -fsSL "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/$archive_name" -o "$archive"
+                        echo "$jdk_sha256  $archive" | sha256sum --check -
+                        staging="$jdk_root/extract-$jdk_arch-$$"
+                        mkdir -p "$staging"
+                        tar -xzf "$archive" -C "$staging"
+                        mv "$staging/jdk-25.0.5+8" "$jdk_home"
+                        rmdir "$staging"
                         rm "$archive"
                     fi
+                    printf '%s\n' "$jdk_home" > "$jdk_root/java-home"
                     "$jdk_home/bin/java" -version
                 '''
                 script {
-                    env.JAVA_HOME = "${env.WORKSPACE}/.jdk/jdk-25.0.5+8"
+                    env.JAVA_HOME = readFile("${env.WORKSPACE}/.jdk/java-home").trim()
                     env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
                 }
             }
