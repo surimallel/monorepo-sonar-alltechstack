@@ -18,6 +18,17 @@ their sources and coverage reports together as one SonarQube project.
 Install JDK 17 or later, Maven, Node.js 20+, npm, and Python 3.10+. The
 Jenkins pipeline downloads and checksum-verifies Gradle 8.10.2.
 
+Start the browser demo from the repository root:
+
+```sh
+cd demo
+npm start
+```
+
+Open [http://127.0.0.1:3000](http://127.0.0.1:3000). The demo compiles the Java
+feature classes when it starts and calls the Java, Node.js, and Python feature
+implementations. It listens only on localhost.
+
 ```sh
 mvn -B -f java-maven/pom.xml clean verify
 gradle -p java-gradle clean check jacocoTestReport
@@ -25,7 +36,7 @@ cd node && npm install && npm test
 cd ../python && python -m venv .venv
 # Activate .venv, then:
 python -m pip install -r requirements.txt
-python -m coverage run --source=src -m unittest discover -s tests
+python -m coverage run --source=src.palindrome -m unittest discover -s tests
 python -m coverage xml -o coverage.xml
 python -m coverage report --fail-under=80
 ```

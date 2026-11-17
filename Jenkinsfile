@@ -55,7 +55,7 @@ pipeline {
             steps {
                 sh 'python3 -m venv python/.venv'
                 sh 'python/.venv/bin/python -m pip install -r python/requirements.txt'
-                sh 'COVERAGE_FILE=python/.coverage PYTHONPATH=python python/.venv/bin/python -m coverage run --source=python/src -m unittest discover -s python/tests'
+                sh 'COVERAGE_FILE=python/.coverage PYTHONPATH=python python/.venv/bin/python -m coverage run --source=src.palindrome -m unittest discover -s python/tests'
                 sh 'COVERAGE_FILE=python/.coverage python/.venv/bin/python -m coverage xml -o python/coverage.xml'
                 sh 'COVERAGE_FILE=python/.coverage python/.venv/bin/python -m coverage report --fail-under=80'
             }

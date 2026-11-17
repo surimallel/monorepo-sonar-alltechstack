@@ -3,6 +3,7 @@
 **/build/
 .gradle/
 .gradle-dist/
+demo/.build/
 
 # Node
 node/node_modules/

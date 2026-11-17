@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>All-tech-stack demo</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: system-ui, sans-serif;
+      background: #f3f6fb;
+      color: #172033;
+    }
+
+    body {
+      margin: 0 auto;
+      max-width: 960px;
+      padding: 2rem 1rem 4rem;
+    }
+
+    h1 { margin-bottom: .35rem; }
+    .intro { color: #506078; margin-top: 0; }
+    .features { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    section { background: white; border: 1px solid #dce3ee; border-radius: 12px; padding: 1.25rem; }
+    label { display: block; font-size: .9rem; font-weight: 600; margin: .8rem 0 .25rem; }
+    input { box-sizing: border-box; border: 1px solid #aebbd0; border-radius: 6px; font: inherit; padding: .55rem; width: 100%; }
+    button { background: #2355a5; border: 0; border-radius: 6px; color: white; cursor: pointer; font: inherit; margin-top: 1rem; padding: .6rem .9rem; }
+    button:focus-visible, input:focus-visible { outline: 3px solid #93baff; outline-offset: 2px; }
+    output { background: #f3f6fb; border-radius: 6px; display: block; min-height: 1.4rem; margin-top: .8rem; overflow-wrap: anywhere; padding: .6rem; white-space: pre-wrap; }
+    .stack { color: #506078; font-size: .85rem; margin-bottom: 0; }
+  </style>
+</head>
+<body>
+  <h1>All-tech-stack demo</h1>
+  <p class="intro">Try each feature. Requests run through the Java, Node.js, or Python implementation in this repository.</p>
+
+  <main class="features">
+    <section>
+      <h2>Greeting formatter</h2>
+      <p class="stack">Java / Maven</p>
+      <form data-endpoint="/api/greeting">
+        <label for="greeting-name">Name</label>
+        <input id="greeting-name" name="name" value="Ada Lovelace" required>
+        <button type="submit">Format greeting</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+
+    <section>
+      <h2>Tax calculator</h2>
+      <p class="stack">Java / Gradle</p>
+      <form data-endpoint="/api/tax">
+        <label for="tax-amount">Amount</label>
+        <input id="tax-amount" name="amount" type="number" min="0" step="any" value="50" required>
+        <label for="tax-rate">Rate (0 to 1)</label>
+        <input id="tax-rate" name="rate" type="number" min="0" max="1" step="any" value="0.165" required>
+        <button type="submit">Calculate tax</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+
+    <section>
+      <h2>URL slug generator</h2>
+      <p class="stack">Node.js</p>
+      <form data-endpoint="/api/slug">
+        <label for="slug-value">Text</label>
+        <input id="slug-value" name="value" value="Hello, Node.js!" required>
+        <button type="submit">Generate slug</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+
+    <section>
+      <h2>Palindrome checker</h2>
+      <p class="stack">Python</p>
+      <form data-endpoint="/api/palindrome">
+        <label for="palindrome-value">Text</label>
+        <input id="palindrome-value" name="value" value="A man, a plan, a canal: Panama!" required>
+        <button type="submit">Check palindrome</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
