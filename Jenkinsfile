@@ -19,11 +19,22 @@ pipeline {
         }
 
         stage('Java Gradle - tax calculator') {
-            tools {
-                gradle 'Gradle 8'
-            }
             steps {
-                sh 'gradle -p java-gradle clean check jacocoTestReport'
+                sh '''
+                    set -eu
+                    gradle_version=8.10.2
+                    gradle_dir="$WORKSPACE/.gradle-dist/gradle-$gradle_version"
+                    if [ ! -x "$gradle_dir/bin/gradle" ]; then
+                        mkdir -p "$WORKSPACE/.gradle-dist"
+                        cd "$WORKSPACE/.gradle-dist"
+                        archive="gradle-$gradle_version-bin.zip"
+                        curl -fsSL "https://services.gradle.org/distributions/$archive" -o "$archive"
+                        echo "31c55713e40233a8303827ceb42ca48a47267a0ad4bab9177123121e71524c26  $archive" | sha256sum --check -
+                        unzip -q "$archive"
+                        rm "$archive"
+                    fi
+                    "$gradle_dir/bin/gradle" -p java-gradle clean check jacocoTestReport
+                '''
             }
             post {
                 always {

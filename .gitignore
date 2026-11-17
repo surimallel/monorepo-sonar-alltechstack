@@ -2,6 +2,7 @@
 **/target/
 **/build/
 .gradle/
+.gradle-dist/
 
 # Node
 node/node_modules/
