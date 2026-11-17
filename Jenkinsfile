@@ -26,12 +26,11 @@ pipeline {
                     gradle_dir="$WORKSPACE/.gradle-dist/gradle-$gradle_version"
                     if [ ! -x "$gradle_dir/bin/gradle" ]; then
                         mkdir -p "$WORKSPACE/.gradle-dist"
-                        cd "$WORKSPACE/.gradle-dist"
                         archive="gradle-$gradle_version-bin.zip"
-                        curl -fsSL "https://services.gradle.org/distributions/$archive" -o "$archive"
-                        echo "31c55713e40233a8303827ceb42ca48a47267a0ad4bab9177123121e71524c26  $archive" | sha256sum --check -
-                        unzip -q "$archive"
-                        rm "$archive"
+                        curl -fsSL "https://services.gradle.org/distributions/$archive" -o "$WORKSPACE/.gradle-dist/$archive"
+                        (cd "$WORKSPACE/.gradle-dist" && echo "31c55713e40233a8303827ceb42ca48a47267a0ad4bab9177123121e71524c26  $archive" | sha256sum --check -)
+                        unzip -q "$WORKSPACE/.gradle-dist/$archive" -d "$WORKSPACE/.gradle-dist"
+                        rm "$WORKSPACE/.gradle-dist/$archive"
                     fi
                     "$gradle_dir/bin/gradle" -p java-gradle clean check jacocoTestReport
                 '''
