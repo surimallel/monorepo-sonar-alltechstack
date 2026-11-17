@@ -19,6 +19,9 @@ pipeline {
         }
 
         stage('Java Gradle - tax calculator') {
+            tools {
+                gradle 'Gradle 8'
+            }
             steps {
                 sh 'gradle -p java-gradle clean check jacocoTestReport'
             }

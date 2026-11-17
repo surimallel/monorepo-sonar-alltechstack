@@ -15,7 +15,7 @@ their sources and coverage reports together as one SonarQube project.
 
 ## Run locally
 
-Install JDK 17, Maven, Gradle, Node.js 20+, npm, and Python 3.10+.
+Install JDK 17 or later, Maven, Gradle 8+, Node.js 20+, npm, and Python 3.10+.
 
 ```sh
 mvn -B -f java-maven/pom.xml clean verify
@@ -34,13 +34,16 @@ and Gradle enforce the same minimum through JaCoCo.
 
 ## Jenkins and SonarQube setup
 
-Run the pipeline on a Linux Jenkins agent with JDK 17, Maven, Gradle, Node.js
+Run the pipeline on a Linux Jenkins agent with JDK 17 or later, Maven, Gradle 8+, Node.js
 20+, npm, Python 3, and pip available on `PATH`. Configure the Jenkins
-SonarQube Scanner plugin with a server installation named `SonarQube`, a
+Gradle installation in **Manage Jenkins → Tools** with the name `Gradle 8`.
+The pipeline uses this configured Gradle distribution instead of an older
+system-wide `gradle` command. Configure the Jenkins SonarQube Scanner plugin
+with a server installation named `SonarQube`, a
 scanner tool named `SonarScanner`, and the SonarQube webhook to Jenkins at
 `<jenkins-url>/sonarqube-webhook/`.
 
-The pipeline uses `sonar-project.properties`'s project key (`alltechstack-monorepo`)
+The pipeline uses `sonar-project.properties`'s project key (`monorepo-alltechstack`)
 for the single SonarQube project. Create that project on the server (or enable
 project auto-provisioning) and apply a quality gate that requires coverage and
 the other checks your team expects. Jenkins waits for the server-side gate and
